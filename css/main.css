@@ -1,5 +1,6 @@
-body, html {
+body, html { /* needed for hero to work */
     height: 100%;
+    width: 100%;
 }
 
 header {
@@ -48,10 +49,16 @@ header {
     width: 100%;
 
     /* Position and center the image to scale nicely on all screens */
+    /* background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative; */
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    position: relative;
 }
 
 .hero-text {
@@ -62,10 +69,6 @@ header {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-}
-
-.hero-text form {
-
 }
 
 /* NAVBAR */
@@ -99,10 +102,7 @@ header {
     text-decoration: none;
     line-height: 6.5rem;
     color: white;
-
 }
-
-h1 {}
 
 li {
     display: list-item;
