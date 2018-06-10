@@ -81,6 +81,7 @@ header {
     position: relative;
     float: left;
     margin-bottom: 0;
+    color: white;
 }
 .navbar-link {
     text-transform: uppercase;
@@ -90,7 +91,8 @@ header {
     margin-right: 35px;
     text-decoration: none;
     line-height: 6.5rem;
-    color: #222; 
+    color: white;
+
 }
 
 h1 {}
@@ -102,6 +104,15 @@ li {
 form {
     margin-top: 1rem;
 }
+
+input {
+    color: black;
+}
+
+[placeholder]:focus::-webkit-input-placeholder {
+    transition: opacity 0.25s 0.25s ease; 
+    opacity: 0;
+  }
 
 @media (max-width: 520px) {
     .pageTitle span {
