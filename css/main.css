@@ -10,11 +10,6 @@ header {
     padding: 0;
 }
 
-.navbox { /* used to properly center */
-    position: fixed; 
-
-}
-
 .container {
     max-width: 800px;
 }
@@ -30,14 +25,22 @@ header {
 .navbar {
     position: fixed;
     top: 0;
+    left: 0;
     bottom: 0;
     margin: 0;
     padding: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .navbar-list {
     list-style: none;
     margin-bottom: 0;
+    text-align: center;
+}
+
+.navbar-item {
+    display: inline-block;
 }
 
 .hero-image {
@@ -45,7 +48,7 @@ header {
     background-image: url("../images/hero-img.jpg");
 
     /* Set a specific height */
-    height: 80%;
+    height: 100%;
     width: 100%;
 
     /* Position and center the image to scale nicely on all screens */
