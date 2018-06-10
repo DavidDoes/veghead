@@ -3,14 +3,15 @@
 const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
 const DETAILS_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/details/json?';
 
-function buildPlaces(postal, callback){
+function buildPlaces(userLocale, callback){
     console.log('buildPlaces called')
     const params = {
-        key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
         keyword: 'vegan',
-        location: `${postal}`,
+        // location: `${userLocale}`,
+        address: `${userLocale}`,
         type: 'restaurant',
-        rankby: 'distance'
+        rankby: 'distance',
+        key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
     }
     $.getJSON(PLACES_SEARCH_URL, params, callback) 
 };
@@ -34,12 +35,11 @@ function listenSubmit(){
     $('.js-searchForm').submit(event => {
         event.preventDefault();
         console.log('submit button clicked');
-        const postalTarget = $(event.currentTarget).find('.js-postal');
-        const postal = postalTarget.val();
-        postalTarget.val("");
-        buildPlaces(postal, getData);        
+        const userLocaleTarget = $(event.currentTarget).find('.js-userLocale');
+        const userLocale = userLocaleTarget.val();
+        userLocaleTarget.val("");
+        buildPlaces(userLocale, getData);        
     });
-
 };
 
 $(listenSubmit);

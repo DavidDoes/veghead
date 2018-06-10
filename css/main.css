@@ -71,7 +71,7 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: lemonchiffon;
 }
 
 /* NAVBAR */
@@ -94,7 +94,7 @@ header {
     position: relative;
     float: left;
     margin-bottom: 0;
-    color: white;
+    color: floralwhite;
 }
 .navbar-link {
     text-transform: uppercase;
@@ -104,8 +104,10 @@ header {
     margin-right: 35px;
     text-decoration: none;
     line-height: 6.5rem;
-    color: white;
+    color: floralwhite;
 }
+
+/* core elements */
 
 li {
     display: list-item;
@@ -118,6 +120,32 @@ form {
 input {
     color: black;
 }
+
+button {
+    color: floralwhite;
+    border-color: floralwhite;
+    outline: 0; 
+}
+
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: lemonchiffon;
+  border-color: lemonchiffon;
+  outline: 0; 
+}
+
+input[type="text"]:focus,
+select:focus {
+  border: 1px solid lemonchiffon;
+  outline: 0; }
 
 [placeholder]:focus::-webkit-input-placeholder {
     transition: opacity 0.25s 0.25s ease; 
