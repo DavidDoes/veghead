@@ -1,64 +1,90 @@
 'use strict';
 
-const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
+//Places - Nearby Search
+// const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'; 
+//Places - Find by Text
+const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?'; 
 const DETAILS_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/details/json?';
-const GEOCODE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address';
+const GEOCODE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?';
 
-function buildPlaces(userLocale, callback){
-    console.log('buildPlaces called')
-    const params = {
-        keyword: 'vegan',
-        // location: `${userLocale}`,
-        address: `${userLocale}`,
-        type: 'restaurant',
-        rankby: 'distance',
-        key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-    }
-    $.getJSON(PLACES_SEARCH_URL, params, callback) 
-};
+function geoCoder(loc, callback){
+    console.log('geoCoder called');
 
-function buildDetails() {
-    console.log('buildDetails called')
     const params = {
         key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-        placeid: `${placeID}`
+        address: `${loc}`, //plugged in from listenSubmit
     }
-    $.getJSON(DETAILS_SEARCH_URL, params, callback)
+    $.getJSON(GEOCODE_URL, params, callback)
 }
 
-function getData(data){
-    console.log(data);
-    const results = data.items.map((item) => generateResults(item));
+function showResults(){
+    //generate HTML display Places and Details
 }
 
-// var lat = '';
-// var lng = '';
-// var address = `${userLocale}`;
-// geocoder.geocode( { 'address': address}, function(results, status) {
-//   if (status == google.maps.GeocoderStatus.OK) {
-//      lat = results[0].geometry.location.lat();
-//      lng = results[0].geometry.location.lng();
-//     });
-//   } else {
-//     alert("Geocode was not successful for the following reason: " + status);
-//   }
-// });
+//not implemented
+function getDetails(placeId, callback){
+    console.log('getDetails called');
 
-function geocodePostal(userLocale){
-    
+    const details = {
+        key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
+        placeid: `${placeId}`
+    }
+    // $.getJSON(DETAILS_SEARCH_URL, params, callback)
 }
- 
-// navigator.geolocation.getCurrentPosition((pos)=>console.log(pos))
+
+function getPlaces(location, callback){
+    console.log('getPlaces called');    
+    //Find by Text
+    // const params = {
+    //     key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
+    //     input: 'vegan',
+    //     inputtype: 'textquery'
+}
+
 function listenSubmit(){
     $('.js-searchForm').submit(event => {
         event.preventDefault();
         console.log('submit button clicked');
-        const userLocaleTarget = $(event.currentTarget).find('.js-userLocale');
-        const userLocale = userLocaleTarget.val();
-        userLocaleTarget.val("");
-        geocodePostal(userLocale);
-        buildPlaces(userLocale, getData);        
-    });
-};
+        // const locationGetter = navigator.geolocation.getCurrentPosition((pos)=> getPlaces(pos));
+        const locationGetter = $(event.currentTarget).find('.js-userLocale');
+        const location = locationGetter.val();
+        geoCoder(location, getDetails); //push data to getPlaces, run getDetails
+    })
+}
 
 $(listenSubmit);
+
+
+
+// function getPlaces(userLocale, callback){
+//     console.log('getPlaces called')
+//     const params = {
+//         keyword: 'vegan',
+//         // location: `${userLocale}`,
+//         address: `${userLocale}`,
+//         type: 'restaurant',
+//         rankby: 'distance',
+//         key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
+//     }
+//     $.getJSON(PLACES_SEARCH_URL, params, callback) 
+// };
+
+// function geocodePostal(userLocale){
+//     console.log(geocodePostal called);
+//     //convert postal to latlng using geocoder
+//     const location = `${}`
+// }
+ 
+// navigator.geolocation.getCurrentPosition((pos)=>console.log(pos))
+// getting location with inputting postal code: (not implemented)
+// function listenSubmit(){
+//     $('.js-searchForm').submit(event => {
+//         event.preventDefault();
+//         console.log('submit button clicked');
+//         const userLocaleTarget = $(event.currentTarget).find('.js-userLocale');
+//         const userLocale = userLocaleTarget.val();
+//         userLocaleTarget.val("");
+//         geocodePostal(userLocale);
+//         getPlaces(userLocale, getData);        
+//     });
+// };
