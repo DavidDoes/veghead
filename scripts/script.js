@@ -1,4 +1,11 @@
 'use strict';
+//origin error fix:
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+//     next();
+//   });
 
 //Places - Nearby Search
 // const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'; 
@@ -15,6 +22,23 @@ function geoCoder(loc, callback){
         address: `${loc}`, //plugged in from listenSubmit
     }
     $.getJSON(GEOCODE_URL, params, callback)
+    //HOW DO I GET LATLNG FROM LINE 15 TO getPlaces()??
+}
+
+function getPlaces(loc, callback){
+    console.log('getPlaces called');  
+    //see object?
+
+    //get results of search
+    // Find by Text
+    const params = {
+        key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
+        query: 'vegan',
+        // location: `${loc}`
+    }
+    $.getJSON(PLACES_SEARCH_URL, params).then(callback)
+    .catch(err => console.log(err));
+    getDetails(loc);
 }
 
 function showResults(){
@@ -32,15 +56,6 @@ function getDetails(placeId, callback){
     // $.getJSON(DETAILS_SEARCH_URL, params, callback)
 }
 
-function getPlaces(location, callback){
-    console.log('getPlaces called');    
-    //Find by Text
-    // const params = {
-    //     key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-    //     input: 'vegan',
-    //     inputtype: 'textquery'
-}
-
 function listenSubmit(){
     $('.js-searchForm').submit(event => {
         event.preventDefault();
@@ -48,7 +63,7 @@ function listenSubmit(){
         // const locationGetter = navigator.geolocation.getCurrentPosition((pos)=> getPlaces(pos));
         const locationGetter = $(event.currentTarget).find('.js-userLocale');
         const location = locationGetter.val();
-        geoCoder(location, getDetails); //push data to getPlaces, run getDetails
+        geoCoder(location, getPlaces); //push location to geoCoder, run getPlaces after
     })
 }
 
