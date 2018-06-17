@@ -18,33 +18,36 @@ const GEOCODE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?';
 
 function geoCoder(loc, callback){
     console.log('geoCoder called');
-
-    const params = {
-        url: PLACES_SEARCH_URL,
+    const settings = {
+        url: GEOCODE_URL,
         data: {
-            key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-            address: `${loc}`, //plugged in from listenSubmit    
-        },
-        dataType: 'json',
-        type: 'GET',
-        success: callback
-    };
-    $.ajax(params)
-    // $.getJSON(GEOCODE_URL, params, callback)
-    //HOW DO I GET LATLNG TO getPlaces()??
-}
+                key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
+                address: `${loc}`, //plugged in from listenSubmit    
+            },
+            dataType: 'json',
+            crossDomain: true,
+            type: 'GET',
+            success: callback
+        };
+        $.ajax(settings);
+    }
+
+//     const params = {
+//         key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
+//         address: `$(loc)`, //plugged in from listenSubmit
+//     }
+//     $.getJSON(GEOCODE_URL, params, callback)
+//     HOW DO I GET LATLNG TO getPlaces()??
+// }
 
 function getPlaces(loc, callback){
-    console.log('getPlaces called');  
-    //see object?
+    console.log('getPlaces called');
+    // store data from API object
+    const settings = {
+        url: PLACES_SEARCH_URL,
+        data: {
 
-    //get results of search
-    // Find by Text
-    const params = {
-        address: `${loc}` 
-        // key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-        // query: 'vegan',
-        // inputtype: 'textquery'
+        }
     }
     $.getJSON(PLACES_SEARCH_URL, params).then(callback)
     .catch(err => console.log(err));
