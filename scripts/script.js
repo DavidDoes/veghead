@@ -10,7 +10,9 @@
 //Places - Nearby Search
 // const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'; 
 //Places - Find by Text
-const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?'; 
+// const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?';
+const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=vegan&inputtype=textquery&fields=photos,formatted_address,name,opening_hours,rating&&key=AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0'; 
+//need to pinpoint user's location in this URL somehow
 const DETAILS_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/details/json?';
 const GEOCODE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?';
 
@@ -18,11 +20,18 @@ function geoCoder(loc, callback){
     console.log('geoCoder called');
 
     const params = {
-        key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-        address: `${loc}`, //plugged in from listenSubmit
-    }
-    $.getJSON(GEOCODE_URL, params, callback)
-    //HOW DO I GET LATLNG FROM LINE 15 TO getPlaces()??
+        url: PLACES_SEARCH_URL,
+        data: {
+            key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
+            address: `${loc}`, //plugged in from listenSubmit    
+        },
+        dataType: 'json',
+        type: 'GET',
+        success: callback
+    };
+    $.ajax(params)
+    // $.getJSON(GEOCODE_URL, params, callback)
+    //HOW DO I GET LATLNG TO getPlaces()??
 }
 
 function getPlaces(loc, callback){
@@ -32,9 +41,10 @@ function getPlaces(loc, callback){
     //get results of search
     // Find by Text
     const params = {
-        key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-        query: 'vegan',
-        // location: `${loc}`
+        address: `${loc}` 
+        // key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
+        // query: 'vegan',
+        // inputtype: 'textquery'
     }
     $.getJSON(PLACES_SEARCH_URL, params).then(callback)
     .catch(err => console.log(err));
