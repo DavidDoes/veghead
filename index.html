@@ -48,7 +48,7 @@
                 <input type="hidden" id="lat" name="lat"/>
                 <input type="hidden" id="lng" name="lng"/>
                 <input type="hidden" id="placeid" name="placeid"/>
-                <button type="submit" aria-label="search">SUBMIT</button>
+                <button class ="button button-primary" type="submit" aria-label="search">SUBMIT</button>
             </form>
         </div>
     </header>
@@ -62,7 +62,6 @@
                     <li class="navbar-item"><a class="navbar-link" href="#resources">Resources</a></li> 
                 </ul>  
             </div>
-
         </nav>
         <main role="main" id="gmap_results">
             <p>map goes here</p>
@@ -72,6 +71,13 @@
             </div>
         </main>
     </div>
+    <main role="main" id="gmap_results">
+            <p>map goes here</p>
+
+            <div class="container" id="resources">
+                <h3>Resources go here</h3>
+            </div>
+        </main>
 
     <!-- Google Maps API with Key -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0&libraries=places"></script>
