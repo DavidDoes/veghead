@@ -1,57 +1,62 @@
 'use strict';
-//origin error fix:
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-//     next();
-//   });
+//KNOWN ISSUES
+// - Callback in GeoCoder?
+// - How do we get Geocoded info to next function? 
+// - How do we avoid callback hell?`
+// - How do we access API object? 
 
 //Places - Nearby Search
-// const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'; 
+// const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?input=vegan&inputtype=textquery&fields=photos,formatted_address,name,opening_hours,rating&key=AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0'; 
 //Places - Find by Text
-// const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?';
-const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=vegan&inputtype=textquery&fields=photos,formatted_address,name,opening_hours,rating&&key=AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0'; 
+const PLACES_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=vegan&inputtype=textquery&fields=photos,formatted_address,name,opening_hours,rating&key=AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0'; 
 //need to pinpoint user's location in this URL somehow
 const DETAILS_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/details/json?';
-const GEOCODE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?';
+// const GEOCODE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?';
 
-function geoCoder(loc, callback){
+const GEOCODE_URL = `https://maps.googleapis.com/maps/api/geocode/json?postal_code=`;
+const key = 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0';
+
+function geoCoder(loc, getPlaces){
+    //take user's inputted postal at `${loc}` and convert to ltlng
     console.log('geoCoder called');
+    // let URL = `${GEOCODE_URL}${loc}&${key}`;
     const settings = {
-        url: GEOCODE_URL,
-        data: {
-                key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-                address: `${loc}`, //plugged in from listenSubmit    
-            },
-            dataType: 'json',
-            crossDomain: true,
-            type: 'GET',
-            success: callback
-        };
-        $.ajax(settings);
+        datatype: 'jsonp'
     }
+    $.ajax(URL, settings, getPlaces);
+}
+    // below doesn't feel right - this might be best used in getPlaces func?
+    // const settings = {
+    //     url: GEOCODE_URL,
+    //     data: {
+    //             key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
+    //             address: `${loc}`, //plugged in from listenSubmit    
+    //         },
+    //         dataType: 'json',
+    //         crossDomain: true,
+    //         type: 'GET',
+    //         success: callback
+    //     };
+    //     $.ajax(settings);
+    //     console.log('Directly from user input: ' + `${loc}`);
+    //     console.log('From settings.data.address: ' + settings.data.address);
+    //above two should be the same
+    // }
 
-//     const params = {
-//         key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-//         address: `$(loc)`, //plugged in from listenSubmit
-//     }
-//     $.getJSON(GEOCODE_URL, params, callback)
-//     HOW DO I GET LATLNG TO getPlaces()??
-// }
 
-function getPlaces(loc, callback){
+function getPlaces(data, callback){
     console.log('getPlaces called');
     // store data from API object
-    const settings = {
-        url: PLACES_SEARCH_URL,
-        data: {
+    // const userLocation = 
+    // const settings = {
+    //     url: PLACES_SEARCH_URL,
+    //     data: {
 
-        }
-    }
-    $.getJSON(PLACES_SEARCH_URL, params).then(callback)
-    .catch(err => console.log(err));
-    getDetails(loc);
+    //     }
+    // }
+    // $.getJSON(PLACES_SEARCH_URL, params).then(callback)
+    // .catch(err => console.log(err));
+    // getDetails(loc);
 }
 
 function showResults(){
