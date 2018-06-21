@@ -43,7 +43,7 @@
         <div class="hero-text">
             <h3>Discover vegan restaurants near you</h3>
             <form role="form" class="js-searchForm">
-                <input aria-label="userLocale code input" type="text" id="js-userPostal" placeholder="Enter your postal code" required>
+                <input aria-label="postal code input" type="text" id="js-userPostal" placeholder="Enter your postal code" required>
                 <legend role="legend">Click SUBMIT to get results based on location.</legend>
                 <input type="hidden" id="lat" name="lat"/>
                 <input type="hidden" id="lng" name="lng"/>
@@ -63,26 +63,20 @@
                 </ul>  
             </div>
         </nav>
-        <main role="main" id="gmap_results">
-            <p>map goes here</p>
-
-            <div class="container" id="resources">
-                <h3>Resources go here</h3>
-            </div>
-        </main>
     </div>
-    <main role="main" id="gmap_results">
-            <p>map goes here</p>
+    <main role="main">
+        <div id="map">
 
-            <div class="container" id="resources">
-                <h3>Resources go here</h3>
-            </div>
-        </main>
+        </div>
+        <p>map goes above this line</p>
+
+        <div class="container" id="resources">
+            <h3>Resources go here</h3>
+        </div>
+    </main>
 
     <!-- Google Maps API with Key -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0&libraries=places"></script>
-    <!-- ajax script -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- custom script -->
     <script src="scripts/script.js"></script>
 

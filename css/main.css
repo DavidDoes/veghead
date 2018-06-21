@@ -139,7 +139,7 @@ input {
     color: black;
     border-color: black;
     outline: 0; 
-    opacity: .9;
+    opacity: .8;
 }
 
 .button.button-primary:hover,
@@ -153,20 +153,30 @@ input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
     background-color: lemonchiffon;
-  color: black;
-  border-color: lemonchiffon;
-  opacity: .9;
+    color: black;
+    border-color: lemonchiffon;
+    opacity: .8;
+}
+
+input[type="text"]{
+    opacity: .8;
 }
 
 input[type="text"]:focus,
 select:focus {
-  border: 1px solid lemonchiffon;
-  outline: 0; }
+    border: 1px solid lemonchiffon;
+    outline: 0; 
+}
 
 [placeholder]:focus::-webkit-input-placeholder {
     transition: opacity 0.25s 0.25s ease; 
     opacity: 0;
   }
+
+#map {
+    height: 40em;
+    width: 40em;
+}
 
 @media (max-width: 520px) {
     .pageTitle span {

@@ -1,11 +1,24 @@
 // 'use strict';
 
+//TO-DO LIST
+// - Change user location image
+// - Add markers doesn't work (see https://github.com/carabus/road-trip-weather-forecast/blob/master/index.js)
+// - getDetails service needs revision to work
+// (see https://developers.google.com/maps/documentation/javascript/places#place_details)
+
 //Global API variables
 var geocoder;
 var map;
 var service;
 var markers = Array();
 var infos = Array();
+
+$(handleApp);
+
+function handleApp() {
+  initMap();
+  listenSubmit();
+}
 
 //get nearby restaurants 
 function getPlaces(loc){
@@ -16,8 +29,8 @@ function getPlaces(loc){
     geocoder.geocode({'address':address}, function(results, status){
         if (status == google.maps.GeocoderStatus.OK){ //if everything checks out
             var addrLocation = results[0].geometry.location;
-            // map.setCenter(addrLocation);
-            //store coords in hidden variables:
+            map.setCenter(addrLocation);
+            //store coords in hidden elements:
             document.getElementById('lat').value = results[0].geometry.location.lat();
             document.getElementById('lng').value = results[0].geometry.location.lng();
 
@@ -26,42 +39,57 @@ function getPlaces(loc){
                 position: addrLocation, //from above
                 map: map,
                 title: results[0].formatted_address, //from Google API object
-                icon: 'favicon.png'
+                icon: 'images/favicon.png'
             });
             var type = "restaurant";
-            var radius = "1000";
+            var radius = "5000";
             var lat = document.getElementById('lat').value;
             var lng = document.getElementById('lng').value;
             var cur_location = new google.maps.LatLng(lat, lng);
             //request to Places
             var request = {
+                //placeId = place_id
                 location: cur_location,
                 radius: radius,
                 types: [type],
                 keyword: 'vegan'
             };
             service = new google.maps.places.PlacesService(map); 
-            service.nearbySearch(request, createMarkers); //use nearbySearch service
-            service.getDetails(request, createMarkers); //user getDetails service
+            service.nearbySearch(request, displaySearchResults); //use nearbySearch service, run callback to get details
         } else {
             alert('Please enter a valid postal code.')
         }
     });
 };
 
+function displaySearchResults(results, status) {
+    console.log(results);
+    console.log(status);
+    service.getDetails(request, displaySearchResults); //use getDetails service
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        var marker = new google.maps.Marker({
+          map: map,
+          place: {
+            placeId: results[0].place_id,
+            location: results[0].geometry.location
+          }
+        });
+      }
+    }
+
 function createMarkers(results, status){
     console.log('createMarkers called');
-    //generate HTML display Places and Details
+    //iterate thru Places array
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
-        var place = results[i];
-        createMarker(results[i]); //built-in API function
+            var place = results[i];
+            createMarker(results[i]); 
         }
     }
 }
 
 function createMarker(obj){
-    var image = 'favicon.png';
+    var image = 'images/favicon.png';
     var mark = new google.maps.Marker({
         position: obj.geometry.location,
         map: map,
@@ -91,46 +119,8 @@ function listenSubmit(){
 function initMap(){
     geocoder = new google.maps.Geocoder();
     var myOptions = { //custom map styling
-        zoom: 10
+        zoom: 10,
     };
-    //generate new map at 'gmap_results' id in HTML
-    var map = new google.maps.Map(document.getElementById('gmap_results'), myOptions);
+    //generate new map at 'map' id in HTML
+    map = new google.maps.Map(document.getElementById('map'), myOptions);
 }
-
-google.maps.event.addDomListener(window, 'load', initMap);
-$(listenSubmit);
-
-
-
-// function getPlaces(userLocale, callback){
-//     console.log('getPlaces called')
-//     const params = {
-//         keyword: 'vegan',
-//         // location: `${userLocale}`,
-//         address: `${userLocale}`,
-//         type: 'restaurant',
-//         rankby: 'distance',
-//         key: 'AIzaSyCT4F67piVv6cvASPssAR1s_buPw6kBQw0',
-//     }
-//     $.getJSON(PLACES_SEARCH_URL, params, callback) 
-// };
-
-// function geocodePostal(userLocale){
-//     console.log(geocodePostal called);
-//     //convert postal to latlng using geocoder
-//     const location = `${}`
-// }
- 
-// navigator.geolocation.getCurrentPosition((pos)=>console.log(pos))
-// getting location with inputting postal code: (not implemented)
-// function listenSubmit(){
-//     $('.js-searchForm').submit(event => {
-//         event.preventDefault();
-//         console.log('submit button clicked');
-//         const userLocaleTarget = $(event.currentTarget).find('.js-userLocale');
-//         const userLocale = userLocaleTarget.val();
-//         userLocaleTarget.val("");
-//         geocodePostal(userLocale);
-//         getPlaces(userLocale, getData);        
-//     });
-// };
