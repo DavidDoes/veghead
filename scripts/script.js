@@ -11,7 +11,10 @@ var geocoder;
 var map;
 var service;
 var markers = Array();
-var infos = Array();
+// var infos = Array();
+var infowindow = new google.maps.InfoWindow({
+    content: 'obj.name + obj.vicinity'
+});
 
 $(handleApp);
 
@@ -63,23 +66,31 @@ function getPlaces(loc){
 };
 
 function displaySearchResults(results, status) {
-    console.log(results);
-    console.log(status);
-    service.getDetails(request, displaySearchResults); //use getDetails service
+    // console.log(results);
+    // console.log(status);
+    // service.getDetails(results, displaySearchResults); //use getDetails service
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-        var marker = new google.maps.Marker({
-          map: map,
-          place: {
-            placeId: results[0].place_id,
-            location: results[0].geometry.location
-          }
-        });
-      }
+        for (var i = 0; i < results.length; i++) {
+            var place = results[i];
+            createMarker(results[i]); 
+            console.log(results[i]); 
+        }
     }
+}
+    // if (status == google.maps.places.PlacesServiceStatus.OK) {
+    //     var marker = new google.maps.Marker({
+    //       map: map,
+    //       place: {
+    //         placeId: results[0].place_id,
+    //         location: results[0].geometry.location
+    //       }
+    //     });
+    //   }
+    // }
 
 function createMarkers(results, status){
     console.log('createMarkers called');
-    //iterate thru Places array
+    //iterate thru Places array to display Places and Details
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             var place = results[i];
@@ -90,19 +101,22 @@ function createMarkers(results, status){
 
 function createMarker(obj){
     var image = 'images/favicon.png';
-    var mark = new google.maps.Marker({
+    var marker = new google.maps.Marker({
         position: obj.geometry.location,
         map: map,
         title: obj.name,
         icon: image
     });
-    markers.push(mark); //send to marks global var, which is an array
+    markers.push(marker); //send to marks global var, which is an array
     //display info at marker:
+    marker.addListener('click', function(){
+        infowindow.open(map, marker);
+    })
     var infowindow = new google.maps.Infowindow({
         content: 
         'obj.name + obj.vicinity'
     });
-    infos.push(infowindow); //send to infos global var, which is an array
+    // infos.push(infowindow); //send to infos global var, which is an array
 }
 
 function listenSubmit(){
