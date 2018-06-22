@@ -2,19 +2,19 @@
 
 //TO-DO LIST
 // - Change user location image
-// - Add markers doesn't work (see https://github.com/carabus/road-trip-weather-forecast/blob/master/index.js)
+// - Change icon size
 // - getDetails service needs revision to work
 // (see https://developers.google.com/maps/documentation/javascript/places#place_details)
+// - Marker infowindow not going away
+// - Add <strong> to obj.name and <a href> to obj.vicinity
+// - Hide map (grey box) until called (hidden attribute on div, remove hidden in call)
 
 //Global API variables
 var geocoder;
 var map;
 var service;
 var markers = Array();
-// var infos = Array();
-var infowindow = new google.maps.InfoWindow({
-    content: 'obj.name + obj.vicinity'
-});
+var infowindow;
 
 $(handleApp);
 
@@ -77,16 +77,6 @@ function displaySearchResults(results, status) {
         }
     }
 }
-    // if (status == google.maps.places.PlacesServiceStatus.OK) {
-    //     var marker = new google.maps.Marker({
-    //       map: map,
-    //       place: {
-    //         placeId: results[0].place_id,
-    //         location: results[0].geometry.location
-    //       }
-    //     });
-    //   }
-    // }
 
 function createMarkers(results, status){
     console.log('createMarkers called');
@@ -100,6 +90,10 @@ function createMarkers(results, status){
 }
 
 function createMarker(obj){
+    var contentString = `${obj.name} | ${obj.vicinity}`;
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
     var image = 'images/favicon.png';
     var marker = new google.maps.Marker({
         position: obj.geometry.location,
@@ -112,10 +106,6 @@ function createMarker(obj){
     marker.addListener('click', function(){
         infowindow.open(map, marker);
     })
-    var infowindow = new google.maps.Infowindow({
-        content: 
-        'obj.name + obj.vicinity'
-    });
     // infos.push(infowindow); //send to infos global var, which is an array
 }
 
@@ -123,7 +113,6 @@ function listenSubmit(){
     $('.js-searchForm').submit(event => {
         event.preventDefault();
         console.log('submit button clicked');
-        // const locationGetter = navigator.geolocation.getCurrentPosition((pos)=> getPlaces(pos));
         const locationGetter = $(event.currentTarget).find('#js-userPostal');
         const location = locationGetter.val();
         getPlaces(location); //push location to geoCoder, run getPlaces after
