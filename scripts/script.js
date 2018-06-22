@@ -10,6 +10,9 @@
 // - Hide map (grey box) until called (hidden attribute on div, remove hidden in call)
 // - Change 'var' to appropriate 'var', 'let', 'const'
 // - Implement auto scroll on submit
+// - Not all results that normally come up in Google Maps search are showing
+// - Stylize map
+// - Finish Resources
 
 //Global API variables
 var geocoder;
@@ -47,7 +50,7 @@ function getPlaces(loc){
                 icon: 'images/favicon.png'
             });
             var type = "restaurant";
-            var radius = "5000";
+            var radius = "32000";
             var lat = document.getElementById('lat').value;
             var lng = document.getElementById('lng').value;
             var cur_location = new google.maps.LatLng(lat, lng);
@@ -60,7 +63,7 @@ function getPlaces(loc){
                 keyword: 'vegan'
             };
             service = new google.maps.places.PlacesService(map); 
-            service.nearbySearch(request, displaySearchResults); //use nearbySearch service, run callback to get details
+            service.nearbySearch(request, displaySearchResults); 
         } else {
             alert('Please enter a valid postal code.')
         }
@@ -93,13 +96,6 @@ function createMarkers(results, status){
 
 function createMarker(obj){
     var contentString = `${obj.name} | ${obj.vicinity}`;
-<<<<<<< HEAD
-    var currentInfoWindow = null;
-    var infowindow = new google.maps.InfoWindow({ //create and open infowindow
-        content: contentString
-    });
-=======
->>>>>>> 3c648d624d7956a5ec7bc31441f5ef8103392e6c
     var image = 'images/favicon.png';
     var marker = new google.maps.Marker({
         position: obj.geometry.location,
@@ -110,11 +106,7 @@ function createMarker(obj){
     markers.push(marker); //send to marks global var, which is an array
     //display info at marker:
     marker.addListener('click', function(){
-<<<<<<< HEAD
-        infowindow.close();
-=======
-        infowindow.setContent(contentString);
->>>>>>> 3c648d624d7956a5ec7bc31441f5ef8103392e6c
+        infowindow.setContent(contentString)
         infowindow.open(map, marker);
 
     })
