@@ -8,6 +8,8 @@
 // - Marker infowindow not going away
 // - Add <strong> to obj.name and <a href> to obj.vicinity
 // - Hide map (grey box) until called (hidden attribute on div, remove hidden in call)
+// - Change 'var' to appropriate 'var', 'let', 'const'
+// - Implement auto scroll on submit
 
 //Global API variables
 var geocoder;
@@ -91,7 +93,8 @@ function createMarkers(results, status){
 
 function createMarker(obj){
     var contentString = `${obj.name} | ${obj.vicinity}`;
-    var infowindow = new google.maps.InfoWindow({
+    var currentInfoWindow = null;
+    var infowindow = new google.maps.InfoWindow({ //create and open infowindow
         content: contentString
     });
     var image = 'images/favicon.png';
@@ -104,7 +107,17 @@ function createMarker(obj){
     markers.push(marker); //send to marks global var, which is an array
     //display info at marker:
     marker.addListener('click', function(){
+        infowindow.close();
         infowindow.open(map, marker);
+
+    })
+    map.addListener('click', function(){
+        infowindow.close();
+        // if (currentInfoWindow != null) {
+        //     currentInfoWindow.close();
+        // }
+        // infowindow.open(map, marker);
+        // currentInfoWindow = infowindow; 
     })
     // infos.push(infowindow); //send to infos global var, which is an array
 }
