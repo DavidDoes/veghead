@@ -14,7 +14,7 @@ var geocoder;
 var map;
 var service;
 var markers = Array();
-var infowindow;
+var infowindow = new google.maps.InfoWindow();
 
 $(handleApp);
 
@@ -91,9 +91,6 @@ function createMarkers(results, status){
 
 function createMarker(obj){
     var contentString = `${obj.name} | ${obj.vicinity}`;
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
     var image = 'images/favicon.png';
     var marker = new google.maps.Marker({
         position: obj.geometry.location,
@@ -104,6 +101,7 @@ function createMarker(obj){
     markers.push(marker); //send to marks global var, which is an array
     //display info at marker:
     marker.addListener('click', function(){
+        infowindow.setContent(contentString);
         infowindow.open(map, marker);
     })
     // infos.push(infowindow); //send to infos global var, which is an array
