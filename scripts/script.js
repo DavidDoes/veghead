@@ -3,16 +3,18 @@
 //TO-DO LIST
 // - Change user location image
 // - Change icon size
+// - Change map width
 // - getDetails service needs revision to work
 // (see https://developers.google.com/maps/documentation/javascript/places#place_details)
-// - Marker infowindow not going away
 // - Add <strong> to obj.name and <a href> to obj.vicinity
 // - Hide map (grey box) until called (hidden attribute on div, remove hidden in call)
+// - Set style of infowindow
 // - Change 'var' to appropriate 'var', 'let', 'const'
 // - Implement auto scroll on submit
 // - Not all results that normally come up in Google Maps search are showing
 // - Stylize map
 // - Finish Resources
+// - Make nav bar turn to hamburger menu on scroll
 
 //Global API variables
 var geocoder;
@@ -111,12 +113,7 @@ function createMarker(obj){
 
     })
     map.addListener('click', function(){
-        infowindow.close();
-        // if (currentInfoWindow != null) {
-        //     currentInfoWindow.close();
-        // }
-        // infowindow.open(map, marker);
-        // currentInfoWindow = infowindow; 
+        infowindow.close(); //closes infowindow if empty map space clicked
     })
     // infos.push(infowindow); //send to infos global var, which is an array
 }
@@ -133,9 +130,13 @@ function listenSubmit(){
 
 function initMap(){
     geocoder = new google.maps.Geocoder();
+    
     var myOptions = { //custom map styling
         zoom: 10,
     };
     //generate new map at 'map' id in HTML
     map = new google.maps.Map(document.getElementById('map'), myOptions);
+    google.maps.event.addListenerOnce(map, 'idle', () => {
+        document.getElementsByTagName('iframe')[0].title = "Google Maps";
+    }) //set aria title to "Google Maps"
 }
