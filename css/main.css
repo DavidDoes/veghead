@@ -171,9 +171,10 @@ select:focus {
 [placeholder]:focus::-webkit-input-placeholder {
     transition: opacity 0.25s 0.25s ease; 
     opacity: 0;
-  }
+}
 
 #map {
+    margin: 0 auto;
     height: 40em;
     width: 40em;
 }

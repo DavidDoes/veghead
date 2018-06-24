@@ -1,27 +1,22 @@
 // 'use strict';
 
 //TO-DO LIST
-// - Change user location image
-// - Change icon size
-// - Change map width
-// - getDetails service needs revision to work
-// (see https://developers.google.com/maps/documentation/javascript/places#place_details)
-// - Add <strong> to obj.name and <a href> to obj.vicinity
-// - Hide map (grey box) until called (hidden attribute on div, remove hidden in call)
-// - Set style of infowindow
-// - Change 'var' to appropriate 'var', 'let', 'const'
-// - Implement auto scroll on submit
 // - Not all results that normally come up in Google Maps search are showing
 // - Stylize map
 // - Finish Resources
 // - Make nav bar turn to hamburger menu on scroll
+// - Button to return user to top
+// - Fix white space to right on mobile
+// - Names of results should be links to that item's details or directions.
+// - Input accepts any form of address; change wording to reflect such.
 
-//Global API variables
-var geocoder;
-var map;
-var service;
-var markers = Array();
-var infowindow = new google.maps.InfoWindow();
+
+//Global variables
+let geocoder;
+let map;
+let service;
+let markers = Array();
+const infowindow = new google.maps.InfoWindow();
 
 $(handleApp);
 
@@ -33,41 +28,41 @@ function handleApp() {
 //get nearby restaurants 
 function getPlaces(loc){
     console.log('getPlaces called');
-    var address = `${loc}`
+    let address = `${loc}`
     console.log(address);
     //geocode user postal
     geocoder.geocode({'address':address}, function(results, status){
         if (status == google.maps.GeocoderStatus.OK){ //if everything checks out
-            var addrLocation = results[0].geometry.location;
+            let addrLocation = results[0].geometry.location;
             map.setCenter(addrLocation);
             //store coords in hidden elements:
             document.getElementById('lat').value = results[0].geometry.location.lat();
             document.getElementById('lng').value = results[0].geometry.location.lng();
 
-            //add new marker
-            var addrMarker = new google.maps.Marker({
-                position: addrLocation, //from above
-                map: map,
-                title: results[0].formatted_address, //from Google API object
-                icon: 'images/favicon.png'
-            });
-            var type = "restaurant";
-            var radius = "32000";
-            var lat = document.getElementById('lat').value;
-            var lng = document.getElementById('lng').value;
-            var cur_location = new google.maps.LatLng(lat, lng);
+            //add marker at user location
+            // var addrMarker = new google.maps.Marker({
+            //     position: addrLocation, //from above
+            //     map: map,
+            //     title: results[0].formatted_address, //from Google API object
+            //     icon: 'images/favicon.png'
+            // });
+            let type = "restaurant";
+            let radius = "32000";
+            let lat = document.getElementById('lat').value;
+            let lng = document.getElementById('lng').value;
+            let cur_location = new google.maps.LatLng(lat, lng);
             //request to Places
-            var request = {
+            let request = {
                 //placeId = place_id
                 location: cur_location,
                 radius: radius,
-                types: [type],
+                type: ['restaurant'],
                 keyword: 'vegan'
             };
             service = new google.maps.places.PlacesService(map); 
             service.nearbySearch(request, displaySearchResults); 
         } else {
-            alert('Please enter a valid postal code.')
+            alert('No results found. Please try another location.')
         }
     });
 };
@@ -77,7 +72,7 @@ function displaySearchResults(results, status) {
     // console.log(status);
     // service.getDetails(results, displaySearchResults); //use getDetails service
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
+        for (let i = 0; i < results.length; i++) {
             var place = results[i];
             createMarker(results[i]); 
             console.log(results[i]); 
@@ -89,7 +84,7 @@ function createMarkers(results, status){
     console.log('createMarkers called');
     //iterate thru Places array to display Places and Details
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
+        for (let i = 0; i < results.length; i++) {
             var place = results[i];
             createMarker(results[i]); 
         }
@@ -97,9 +92,9 @@ function createMarkers(results, status){
 }
 
 function createMarker(obj){
-    var contentString = `${obj.name} | ${obj.vicinity}`;
-    var image = 'images/favicon.png';
-    var marker = new google.maps.Marker({
+    let contentString = `<strong>${obj.name}</strong> | <a href="https://www.google.com/maps/dir/?api=1&destination=${obj.name}&destination_place_id=${obj.place_id}" target="_blank">${obj.vicinity}</a>`;
+    const image = 'images/favicon.png';
+    let marker = new google.maps.Marker({
         position: obj.geometry.location,
         map: map,
         title: obj.name,
@@ -122,9 +117,13 @@ function listenSubmit(){
     $('.js-searchForm').submit(event => {
         event.preventDefault();
         console.log('submit button clicked');
-        const locationGetter = $(event.currentTarget).find('#js-userPostal');
+        const locationGetter = $(event.currentTarget).find('#js-userLocation');
         const location = locationGetter.val();
         getPlaces(location); //push location to geoCoder, run getPlaces after
+        $('#map').show(); //unhide map ID
+        $('html, body').animate({ //fluid scroll to map
+            scrollTop: $("#map").offset().top
+        }, 1000);
     })
 }
 
