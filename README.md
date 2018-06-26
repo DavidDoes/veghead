@@ -1,9 +1,20 @@
-# veghead
-A responsive website for helping users find vegan restaurants near them. 
-
+# vegHead
 This app is live at https://daviddoes.github.io/veghead/
 
-##APIs used
-- [Google Maps](https://developers.google.com/maps/documentation/javascript/tutorial)
-- Google Maps Geocoder
-- Google Maps Places
+A responsive website for helping users find vegan restaurants near them. 
+
+## Screenshots
+
+
+## Features
+This single-page, responsive web app utilizes a hero image that immediately captivates the user’s attention with a visually satisfying photo. For screen reader users, their attention is immediately directed toward the input field to begin their search. 
+
+A lightweight UI creates an approachable experience, including fluid scrolling, easy navigation, high-contrast colors, widely recognizable favicon to get the user back to the page quickly after navigating away. 
+
+## Built With
+- ES6
+- jQuery
+- HTML, CSS
+- [Google Maps API](https://developers.google.com/maps/documentation/javascript/tutorial)
+- [Google Maps Geocoder](https://developers.google.com/maps/documentation/geocoding/start)
+- [Google Maps Places Library](https://developers.google.com/maps/documentation/javascript/places)
