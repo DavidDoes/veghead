@@ -1,15 +1,10 @@
 // 'use strict';
 
 //TO-DO LIST
-// - Not all results that normally come up in Google Maps search are showing
-// - Stylize map
-// - Finish Resources
-// - Make nav bar turn to hamburger menu on scroll
-// - Button to return user to top
-// - Fix white space to right on mobile
-// - Names of results should be links to that item's details or directions.
-// - Input accepts any form of address; change wording to reflect such.
-
+// - Add to readme about how user is getting location
+// - ARIA Live attribute on main
+// - error message to HTML
+// - remove console.log
 
 //Global variables
 let geocoder;
@@ -23,6 +18,7 @@ $(handleApp);
 function handleApp() {
   initMap();
   listenSubmit();
+  smoothScrolls();
 }
 
 //get nearby restaurants 
@@ -39,13 +35,6 @@ function getPlaces(loc){
             document.getElementById('lat').value = results[0].geometry.location.lat();
             document.getElementById('lng').value = results[0].geometry.location.lng();
 
-            //add marker at user location
-            // var addrMarker = new google.maps.Marker({
-            //     position: addrLocation, //from above
-            //     map: map,
-            //     title: results[0].formatted_address, //from Google API object
-            //     icon: 'images/favicon.png'
-            // });
             let type = "restaurant";
             let radius = "32000";
             let lat = document.getElementById('lat').value;
@@ -62,7 +51,12 @@ function getPlaces(loc){
             service = new google.maps.places.PlacesService(map); 
             service.nearbySearch(request, displaySearchResults); 
         } else {
-            alert('No results found. Please try another location.')
+            $('.js-showErr').show();
+            const outputElem = $('.js-showErr');
+            const errMsg = (
+                `<p>Please enter a valid postal code, city, state, address, or locality.</p>`
+            );
+            outputElem.html(errMsg);
         }
     });
 };
@@ -70,7 +64,6 @@ function getPlaces(loc){
 function displaySearchResults(results, status) {
     // console.log(results);
     // console.log(status);
-    // service.getDetails(results, displaySearchResults); //use getDetails service
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
             var place = results[i];
@@ -110,7 +103,6 @@ function createMarker(obj){
     map.addListener('click', function(){
         infowindow.close(); //closes infowindow if empty map space clicked
     })
-    // infos.push(infowindow); //send to infos global var, which is an array
 }
 
 function listenSubmit(){
@@ -122,9 +114,34 @@ function listenSubmit(){
         getPlaces(location); //push location to geoCoder, run getPlaces after
         $('#map').show(); //unhide map ID
         $('html, body').animate({ //fluid scroll to map
-            scrollTop: $("#map").offset().top
+            scrollTop: $('main').offset().top
         }, 1000);
     })
+}
+
+function smoothScrolls(){
+    //Click handler for navbar and "top" button
+    $(window).scroll(function(){
+        if ($(this).scrollTop() > 100) {
+            $('#top').fadeIn();
+            $('.navbar').fadeOut();
+        } else {
+            $('#top').fadeOut();
+            $('.navbar').fadeIn();
+        }
+    });
+
+    //Click event to scroll to top
+    $('#top').click(function(){
+        $('html, body').animate({scrollTop : 0}, 1000);
+    });
+
+    //Click event for resources
+    $('.navbar-link').click(function(){
+        $('html, body').animate({
+            scrollTop: $('#resources').offset().top
+        }, 1000);
+    });
 }
 
 function initMap(){
