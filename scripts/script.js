@@ -1,10 +1,7 @@
 // 'use strict';
 
 //TO-DO LIST
-// - Add to readme about how user is getting location
-// - ARIA Live attribute on main
 // - error message to HTML
-// - remove console.log
 
 //Global variables
 let geocoder;
@@ -23,9 +20,9 @@ function handleApp() {
 
 //get nearby restaurants 
 function getPlaces(loc){
-    console.log('getPlaces called');
+    // console.log('getPlaces called');
     let address = `${loc}`
-    console.log(address);
+    // console.log(address);
     //geocode user postal
     geocoder.geocode({'address':address}, function(results, status){
         if (status == google.maps.GeocoderStatus.OK){ //if everything checks out
@@ -50,7 +47,7 @@ function getPlaces(loc){
             };
             service = new google.maps.places.PlacesService(map); 
             service.nearbySearch(request, displaySearchResults); 
-        } else {
+        } else { //not working
             $('.js-showErr').show();
             const outputElem = $('.js-showErr');
             const errMsg = (
@@ -62,19 +59,17 @@ function getPlaces(loc){
 };
 
 function displaySearchResults(results, status) {
-    // console.log(results);
-    // console.log(status);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
             var place = results[i];
             createMarker(results[i]); 
-            console.log(results[i]); 
+            // console.log(results[i]); 
         }
     }
 }
 
 function createMarkers(results, status){
-    console.log('createMarkers called');
+    // console.log('createMarkers called');
     //iterate thru Places array to display Places and Details
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
@@ -108,7 +103,7 @@ function createMarker(obj){
 function listenSubmit(){
     $('.js-searchForm').submit(event => {
         event.preventDefault();
-        console.log('submit button clicked');
+        // console.log('submit button clicked');
         const locationGetter = $(event.currentTarget).find('#js-userLocation');
         const location = locationGetter.val();
         getPlaces(location); //push location to geoCoder, run getPlaces after
