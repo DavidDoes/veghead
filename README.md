@@ -4,6 +4,8 @@ This app is live at https://daviddoes.github.io/veghead/
 A responsive website for helping users find vegan restaurants near them. 
 
 ## Screenshots
+![screenshot](https://github.com/DavidDoes/veghead/blob/master/screenshot.png? "screenshot of web app")
+![screenshot](https://github.com/DavidDoes/veghead/blob/master/screenshot2.png? "another screenshot of web app")
 
 
 ## Features
