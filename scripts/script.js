@@ -2,6 +2,9 @@
 
 //TO-DO LIST
 // - error message to HTML
+// - mobile:
+//  - hero image white gap
+//  - map infowindow needs max width
 
 //Global variables
 let geocoder;
@@ -94,6 +97,7 @@ function createMarker(obj){
     marker.addListener('click', function(){
         infowindow.setContent(contentString)
         infowindow.open(map, marker);
+        infowindow.setOptions({maxWidth:200}); 
 
     })
     map.addListener('click', function(){

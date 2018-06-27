@@ -187,6 +187,7 @@ input[type="button"]:focus {
     background-color: black;
     color: white;
 }
+
 #top:hover{
     text-decoration: none;
     background-color: lemonchiffon;
@@ -243,6 +244,18 @@ main {
 
     legend {
         font-size: 18px;
+    }
+
+    infowindow {
+        max-width: 100px;
+    }
+
+    iframe {
+        max-width: 50%;
+    }
+
+    #map {
+        width: 100%;
     }
 }
 
