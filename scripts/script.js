@@ -26,6 +26,7 @@ function getPlaces(loc){
     //geocode user postal
     geocoder.geocode({'address':address}, function(results, status){
         if (status == google.maps.GeocoderStatus.OK){ //if everything checks out
+            console.log(google.maps.GeocoderStatus);
             let addrLocation = results[0].geometry.location;
             map.setCenter(addrLocation);
             //store coords in hidden elements:

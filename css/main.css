@@ -184,13 +184,16 @@ input[type="button"]:focus {
     right: 40px;
     z-index: 9999;
     display:none;
+    background-color: black;
+    color: white;
 }
 #top:hover{
     text-decoration: none;
     background-color: lemonchiffon;
     color: black;
-    border-color: lemonchiffon;
-    opacity: .8;}
+    border-color: black;
+    opacity: .8;
+}
 
 input[type="text"]{
     opacity: .8;
