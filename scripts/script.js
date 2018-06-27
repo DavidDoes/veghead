@@ -2,9 +2,6 @@
 
 //TO-DO LIST
 // - error message to HTML
-// - mobile:
-//  - hero image white gap
-//  - map infowindow needs max width
 
 //Global variables
 let geocoder;

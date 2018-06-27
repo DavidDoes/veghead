@@ -257,5 +257,13 @@ main {
     #map {
         width: 100%;
     }
+
+    #resources {
+        padding: 0 .15em 0 .8em;
+    }
+
+    .column {
+        padding: 0 0 1.2em 0;
+    }
 }
 
