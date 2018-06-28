@@ -21,9 +21,7 @@ function handleApp() {
 
 //get nearby restaurants 
 function getPlaces(loc){
-    // console.log('getPlaces called');
     let address = `${loc}`
-    // console.log(address);
     //geocode user postal
     geocoder.geocode({'address':address}, function(results, status){
         if (status == google.maps.GeocoderStatus.OK){ //if everything checks out
@@ -51,7 +49,6 @@ function getPlaces(loc){
                 keyword: 'vegan'
             };
             service = new google.maps.places.PlacesService(map); 
-            console.log(google.maps.places.PlacesServiceStatus.OK);
             service.nearbySearch(request, displaySearchResults); 
         } else { 
             $('#js-showErr').removeAttr('hidden'); 
@@ -69,13 +66,11 @@ function displaySearchResults(results, status) {
         for (let i = 0; i < results.length; i++) {
             var place = results[i];
             createMarker(results[i]); 
-            // console.log(results[i]); 
         }
     }
 }
 
 function createMarkers(results, status){
-    // console.log('createMarkers called');
     //iterate thru Places array to display Places and Details
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
@@ -110,7 +105,6 @@ function createMarker(obj){
 function listenSubmit(){
     $('.js-searchForm').submit(event => {
         event.preventDefault();
-        // console.log('submit button clicked');
         const locationGetter = $(event.currentTarget).find('#js-userLocation');
         const location = locationGetter.val();
         getPlaces(location); //push location to geoCoder, run getPlaces after
