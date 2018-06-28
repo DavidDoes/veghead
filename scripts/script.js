@@ -27,6 +27,10 @@ function getPlaces(loc){
     //geocode user postal
     geocoder.geocode({'address':address}, function(results, status){
         if (status == google.maps.GeocoderStatus.OK){ //if everything checks out
+            $('html, body').animate({ //fluid scroll to map
+                scrollTop: $('main').offset().top
+            }, 1000);
+            
             let addrLocation = results[0].geometry.location;
             map.setCenter(addrLocation);
             //store coords in hidden elements:
@@ -49,12 +53,12 @@ function getPlaces(loc){
             service = new google.maps.places.PlacesService(map); 
             console.log(google.maps.places.PlacesServiceStatus.OK);
             service.nearbySearch(request, displaySearchResults); 
-        } else { //not working
-            const outputElem = $('.js-showErr');
-            const errMsg = (
+        } else { 
+            $('#js-showErr').removeAttr('hidden'); 
+            const outputElem = $('#js-showErr');
+            const errMsg =
                 `<p>Please enter a valid postal code, city, state, address, or locality.</p>`
-            );
-            $('.js-showErr').show();
+            ;
             outputElem.html(errMsg);
         }
     });
@@ -111,9 +115,6 @@ function listenSubmit(){
         const location = locationGetter.val();
         getPlaces(location); //push location to geoCoder, run getPlaces after
         $('#map').show(); //unhide map ID
-        $('html, body').animate({ //fluid scroll to map
-            scrollTop: $('main').offset().top
-        }, 1000);
     })
 }
 
