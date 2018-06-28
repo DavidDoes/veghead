@@ -252,7 +252,19 @@ main {
     height: 100vh;
 }
 
+@media (max-width: 800px && min-width: 320px) {
+    .container {
+        width: 85%;
+        padding: 0; 
+      }
+
+    .hero-image {
+        background-image: url("../images/hero-img-800.jpg");
+    }
+}
+
 @media (max-width: 640px) {
+
     .navbar-item {
         padding: 0;
         margin: 0 .5em 0 .5em;
@@ -290,4 +302,3 @@ main {
         padding: 0 0 1.2em 0;
     }
 }
-
