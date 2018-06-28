@@ -2,6 +2,7 @@
 
 //TO-DO LIST
 // - error message to HTML
+// - min-width to 320px
 
 //Global variables
 let geocoder;
@@ -26,7 +27,6 @@ function getPlaces(loc){
     //geocode user postal
     geocoder.geocode({'address':address}, function(results, status){
         if (status == google.maps.GeocoderStatus.OK){ //if everything checks out
-            console.log(google.maps.GeocoderStatus);
             let addrLocation = results[0].geometry.location;
             map.setCenter(addrLocation);
             //store coords in hidden elements:
@@ -47,13 +47,14 @@ function getPlaces(loc){
                 keyword: 'vegan'
             };
             service = new google.maps.places.PlacesService(map); 
+            console.log(google.maps.places.PlacesServiceStatus.OK);
             service.nearbySearch(request, displaySearchResults); 
         } else { //not working
-            $('.js-showErr').show();
             const outputElem = $('.js-showErr');
             const errMsg = (
                 `<p>Please enter a valid postal code, city, state, address, or locality.</p>`
             );
+            $('.js-showErr').show();
             outputElem.html(errMsg);
         }
     });
