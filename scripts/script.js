@@ -54,7 +54,7 @@ function getPlaces(loc){
             $('#js-showErr').removeAttr('hidden'); 
             const outputElem = $('#js-showErr');
             const errMsg =
-                `<p>Please enter a valid postal code, city, state, address, or locality.</p>`
+                `<p>Please enter a valid location.</p>`
             ;
             outputElem.html(errMsg);
         }
