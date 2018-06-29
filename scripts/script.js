@@ -28,7 +28,7 @@ function getPlaces(loc){
             $('html, body').animate({ //fluid scroll to map
                 scrollTop: $('main').offset().top
             }, 1000);
-
+            //add back 'hidden' attr if input valid
             $('#js-showErr').attr('hidden', true); 
             
             let addrLocation = results[0].geometry.location;
@@ -44,7 +44,6 @@ function getPlaces(loc){
             let cur_location = new google.maps.LatLng(lat, lng);
             //request to Places
             let request = {
-                //placeId = place_id
                 location: cur_location,
                 radius: radius,
                 type: ['restaurant'],
