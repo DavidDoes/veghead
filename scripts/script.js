@@ -1,8 +1,4 @@
-// 'use strict';
-
-//TO-DO LIST
-// - clear error msg on new submit
-// - 
+'use strict';
 
 //Global variables
 let geocoder;
