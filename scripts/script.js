@@ -44,7 +44,6 @@ function getPlaces(loc){
             let cur_location = new google.maps.LatLng(lat, lng);
             //request to Places
             let request = {
-                //placeId = place_id
                 location: cur_location,
                 radius: radius,
                 type: ['restaurant'],
