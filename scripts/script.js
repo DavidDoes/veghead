@@ -28,7 +28,7 @@ function getPlaces(loc){
             $('html, body').animate({ //fluid scroll to map
                 scrollTop: $('main').offset().top
             }, 1000);
-
+            //add back 'hidden' attr if input valid
             $('#js-showErr').attr('hidden', true); 
             
             let addrLocation = results[0].geometry.location;
