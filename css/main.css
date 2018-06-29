@@ -190,9 +190,6 @@ input[type="button"].button-primary:focus {
   border-color: lemonchiffon; 
 }
 
-#full { display: inline-block; }
-#short { display: none; }
-
 #top {
     font-size: 15px;
     text-decoration: none;
@@ -300,15 +297,7 @@ main {
     }
 
     #top {
-        background-color: white;
-        color: black;
-        opacity: .6;
-    }
-
-    #top:hover {
-        background-color: black;
-        color: white;
-        opacity: .8;
+        bottom: 700px;
     }
 }
 
