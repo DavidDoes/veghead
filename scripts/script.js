@@ -1,8 +1,8 @@
 // 'use strict';
 
 //TO-DO LIST
-// - error message to HTML
-// - min-width to 320px
+// - clear error msg on new submit
+// - 
 
 //Global variables
 let geocoder;
