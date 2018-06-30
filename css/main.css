@@ -14,7 +14,7 @@ header {
     padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6, h7, form, ul, li, #top {
+h1, h2, h3, h4, h5, h6, h7, form, ul, li, #top, .navbar-item{
     font-family: 'Raleway', serif;
     font-weight: 500;
     letter-spacing: .12em;
@@ -128,7 +128,7 @@ li {
 }
 
 form {
-    margin-top: 1rem;
+    margin: 1rem 0 2.5rem 0;
 }
 
 input {
@@ -136,9 +136,11 @@ input {
 }
 
 legend {
+    display: block;
     font-size: 26px;
     font-weight: 600;
     padding: .5em 2em 0 2em;
+    margin-bottom: .5rem;
 }
 
 a {
@@ -166,14 +168,7 @@ a:visited {
 
 .button.button-primary:hover,
 button.button-primary:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-input[type="button"]:hover,
-.button:focus,
-button:focus,
-input[type="submit"]:focus,
-input[type="reset"]:focus,
-input[type="button"]:focus {
+{
     background-color: lemonchiffon;
     color: black;
     border-color: lemonchiffon;
@@ -182,9 +177,7 @@ input[type="button"]:focus {
 
 .button.button-primary:focus,
 button.button-primary:focus,
-input[type="submit"].button-primary:focus,
-input[type="reset"].button-primary:focus,
-input[type="button"].button-primary:focus {
+{
   color: black;
   background-color: lemonchiffon;
   border-color: lemonchiffon; 
@@ -215,7 +208,7 @@ input[type="button"].button-primary:focus {
     font-size: 15px;
 }
 
-input[type="text"]{
+input[type="text"] {
     opacity: .8;
 }
 
@@ -265,7 +258,8 @@ main {
 
     .navbar-item {
         padding: 0;
-        margin: 0 .5em 0 .5em;
+        margin: 0;
+        font-size: 90%;
     }
 
     .pageTitle span {
@@ -301,42 +295,73 @@ main {
     }
 }
 
-@media (max-width: 640px) {
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box; 
+}
 
-    /* .navbar-item {
-        padding: 0;
-        margin: 0 .5em 0 .5em;
-    }
+.column, .columns {
+    width: 100%;
+    float: left;
+    box-sizing: border-box; 
+}
 
-    .pageTitle span {
-        display: none;
-    }
-    
-    .pageTitle:after {
-        content: "vegHead";
-    }
+.one-half.column { 
+    width: 48%; 
+}
 
-    form {
-        margin: 0 .5em 0 .5em;
-    }
+button {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box; 
+}
 
-    legend {
-        font-size: 18px;
-    }
+input {
+    height: 38px;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    box-shadow: none;
+    box-sizing: border-box;
+}
 
-    infowindow {
-        max-width: 100px;
-    }
+ul {
+    list-style: circle inside; 
+}
 
-    iframe {
-        max-width: 50%;
-    }
+  ol, ul {
+    padding-left: 0;
+    margin-top: 0; 
+}
 
-    #resources {
-        padding: 0 .1em 0 .1em;
-    }
+  ul ul,
+  ul ol,
+  ol ol,
+  ol ul {
+    margin: .5rem 0 .5rem 1rem;
+}
 
-    .column {
-        padding: 0 0 1.2em 0;
-    } */
+  li {
+    font-family: 'Bitter', serif;
+    font-size: 90%;
+    margin-bottom: 1rem; 
 }
